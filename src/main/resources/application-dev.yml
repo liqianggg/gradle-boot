@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bfc_test?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+    password: root
+    username: root
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: m2i3sc
+    database: 1
+    jedis:
+      pool:
+        max-wait: 1000m
+        max-active: 10
+info:
+  contact:
+    email: xixicat@gmail.com
+    phone: 0755-82890987
+management:
+  security:
+    enabled: false

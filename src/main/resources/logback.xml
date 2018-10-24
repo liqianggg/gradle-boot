@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--scan: 当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。
+　　 scanPeriod: 设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。
+　　 debug: 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。-->
+<configuration scan="true" scanPerid="60 seconds" debug="false">
+    <!--property 定义变量值-->
+    <property name="Log_Home" value="/logsHome"/>
+    <!--获取时间戳字符串：
+       key: 标识此<timestamp> 的名字；
+　　　　datePattern: 设置将当前时间（解析配置文件的时间）转换为字符串的模式，遵循java.txt.SimpleDateFormat的格式。
+　　 -->
+    <!--<timestemp key="bySecond" datePattern="yyyyMMddHHmmss"/>-->
+    <!--上下文名称，默认上下文名称为defult，通过${}的方式引用变量-->
+    <!-- <contextName>${bySecond}</contextName>-->
+    <contextName>${Log_home}</contextName>
+    <!--负责日志写组件-->
+    <!--name指定appender名称，class指定appender的全限定名-->
+    <!--ConsoleAppender 把日志输出到控制台，有以下子节点：
+　　　　　<encoder>：对日志进行格式化。（具体参数稍后讲解 ）
+　　　　　<target>：字符串System.out(默认)或者System.err（区别不多说了）-->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--<appender name="fileLog" class="ch.qos.logback.core.FileAppender">-->
+        <!--<file>${Log_Home}/${bySecond}.log</file>-->
+        <!--&lt;!&ndash;>如果是 true，日志被追加到文件结尾，如果是 false，清空现存文件，默认是true。&ndash;&gt;-->
+        <!--<append>true</append>-->
+        <!--&lt;!&ndash;如果是 true，日志会被安全的写入文件，即使其他的FileAppender也在向此文件做写入操作，效率低，默认是 false&ndash;&gt;-->
+        <!--<prudent>false</prudent>-->
+        <!--<encoder>-->
+            <!--<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+
+    <!--<appender name="rollingLog" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+            <!--&lt;!&ndash;日志文件输出的文件名&ndash;&gt;-->
+            <!--<fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>-->
+            <!--&lt;!&ndash;最多保存30天&ndash;&gt;-->
+            <!--<maxHistory>30</maxHistory>-->
+        <!--</rollingPolicy>-->
+        <!--<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
+            <!--&lt;!&ndash;格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符&ndash;&gt;-->
+            <!--<pattern>%d{yyyyMMddHHmmss}[%thread]%-5level %logger{50} -%msg%n</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+
+    <!--<appender name="rollingLog2" class="com.ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<file>rollingLog2.log</file>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+            <!--<maxIndex>3</maxIndex>-->
+            <!--<minIndex>1</minIndex>-->
+        <!--</rollingPolicy>-->
+        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+            <!--<maxFileSize>5MB</maxFileSize>-->
+        <!--</triggeringPolicy>-->
+        <!--<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
+            <!--<pattern>%d{yyyyMMddHHmmss}[%thread]%-5level %logger{50} -%msg%n</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+    <!--配置表示把>=DEBUG级别的日志都输出到控制台-->
+    <root level="INFO">
+        <appender-ref ref="consoleLog"/>
+    </root>
+    <!--
+    配置表示把>=DEBUG级别的日志都输出到${fileName}文件
+    <root level="debug">
+        <appender-ref ref="fileLog"/>
+    </root>
+    -->
+</configuration>
